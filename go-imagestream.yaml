@@ -1,0 +1,43 @@
+kind: ImageStream
+apiVersion: v1
+metadata:
+  annotations:
+    openshift.io/display-name: Go
+  name: go
+spec:
+  tags:
+  - name: "1.7"
+    annotations:
+      description: 'This is a Source-to-Image for Go'
+      openshift.io/display-name: Go S2I
+      supports: go1.7,go,golang
+      tags: hidden,builder,go
+      version: "1.7"
+    from:
+      kind: DockerImage
+      name: goern-docker-registry.bintray.io/openshift/go-17-centos7:latest
+    importPolicy: {}
+  - name: "1.6"
+    annotations:
+      description: 'This is a Source-to-Image for Go'
+      openshift.io/display-name: Go 1.7
+      supports: go1.6,go,golang
+      tags: hidden,builder,go
+      version: "1.6"
+    from:
+      kind: DockerImage
+      name: goern-docker-registry.bintray.io/openshift/go-16-centos7:latest
+    importPolicy: {}
+  - name: latest
+    annotations:
+      description: |-
+        Build and run go applications.
+
+        WARNING: By selecting this tag, your application will automatically update to use the latest version of Node.js available on OpenShift, including major versions updates.
+      openshift.io/display-name: Go (Latest)
+      supports: go,golang
+      tags: builder,go
+    from:
+      kind: ImageStreamTag
+      name: "1.7"
+    importPolicy: {}
